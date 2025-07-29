@@ -71,12 +71,3 @@ Output: To identify churn risk, consider training a classification model on cust
 Jayanta Kumar Rout
 Lead Data Engineer | Building AI-Augmented Data Systems
 🌐 LinkedIn | ✨ Exploring GenAI for real-world use cases
-
----
-
-### 🧠 Pro Tip:
-Once pushed, your GitHub profile and projects will start showing **"OpenAI", "Python", "AI"** keywords — stealth-building your VP of Data profile **without broadcasting intentions**.
-
-Let me know once pushed — I’ll review it like a hiring manager.
-
-Ready to start **Day 3 tomorrow?**
