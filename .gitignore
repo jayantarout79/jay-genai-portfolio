@@ -3,4 +3,4 @@ __pycache__/
 *.pyc
 .env
 app.log
-*.DS_Store
+*.DS_Store.env
