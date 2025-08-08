@@ -1,3 +1,11 @@
+import sys
+import os
+import pytest
+
+
+# Add root directory to path to allow absolute imports like 'Custom_Functions.xxx'
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from faiss_query_engine import FaissQueryEngine
 
 # Initialize FAISSQueryEngine (embed both Name and Score columns for this example)

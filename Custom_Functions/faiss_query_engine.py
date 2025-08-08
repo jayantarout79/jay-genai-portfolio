@@ -5,9 +5,10 @@ import pandas as pd
 import numpy as np
 import faiss
 from openai import OpenAI
-from query_engine import QueryEngine
+from Custom_Functions.query_engine import QueryEngine
+from Custom_Functions.log_utils import get_logger
+logger = get_logger(__name__)
 
-logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 
 # Load environment variables from .env file
 load_dotenv()
@@ -25,7 +26,7 @@ class FaissQueryEngine(QueryEngine):
         super().__init__(csv_path)
 
         if self.df.empty:
-            logging.error("DataFrame is empty. Cannot initialize FAISS index.")
+            logger.error("DataFrame is empty. Cannot initialize FAISS index.")
             return
         self.embedded_columns = embedded_columns
         self.embedding_model = embedding_model
@@ -33,22 +34,29 @@ class FaissQueryEngine(QueryEngine):
         self.id_mapping = []
         
         # Step 1: Prepare text data for embedding
-        logging.info("Preparing text data for embedding...")
+        logger.info("Preparing text data for embedding...")
         self.text_data = self.df[self.embedded_columns].astype(str).agg(' '.join, axis=1).tolist()
 
         # Step 2: Generate embeddings
-        logging.info("Generating embeddings...")
+        logger.info("Generating embeddings...")
         self.embeddings = self._create_embeddings(self.text_data)
 
         # Step 3: Build FAISS index
-        logging.info("Building FAISS index...")
+        logger.info("Building FAISS index...")
         self._build_faiss_index(self.embeddings)
+
+    def preview(self) -> pd.DataFrame:
+        """Returns the first few rows of the DataFrame for inspection."""
+        if self.df.empty:
+            logger.warning("DataFrame is empty. Please check the CSV file path.")
+            return pd.DataFrame()
+        return self.df.head()
 
     def _create_embeddings(self, texts: list) -> np.ndarray:
         """Generates embeddings for a list of texts using OpenAI's embedding API."""
         api_key = os.getenv("OPENAI_API_KEY")
         if not api_key:
-            logging.error("OPENAI_API_KEY not found in environment variables.")
+            logger.error("OPENAI_API_KEY not found in environment variables.")
             return np.zeros((len(texts), 1536), dtype=np.float32)
 
         client = OpenAI(api_key=api_key)
@@ -62,7 +70,7 @@ class FaissQueryEngine(QueryEngine):
                 vector = response.data[0].embedding
                 vectors.append(vector)
             except Exception as e:
-                logging.error(f"Error generating embedding for text '{text}': {e}")
+                logger.error(f"Error generating embedding for text '{text}': {e}")
                 vectors.append(np.zeros(1536))
         return np.array(vectors, dtype=np.float32)
     
@@ -72,12 +80,12 @@ class FaissQueryEngine(QueryEngine):
         self.index = faiss.IndexFlatL2(dim)
         self.index.add(embeddings)
         self.id_mapping = list(range(len(embeddings)))
-        logging.info(f"FAISS index built with {len(embeddings)} vectors.")
+        logger.info(f"FAISS index built with {len(embeddings)} vectors.")
 
     def semantic_search(self, query: str, k: int = 5) -> pd.DataFrame:
         """Performs semantic search for the given query and returns the top-k matching rows."""
         if self.index is None:
-            logging.error("FAISS index is not initialized.")
+            logger.error("FAISS index is not initialized.")
             return pd.DataFrame()
 
         # Generate embedding for the query

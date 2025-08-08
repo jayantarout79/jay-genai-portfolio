@@ -1,8 +1,14 @@
+from decorators_demo import log_execution, time_execution
+
+@log_execution
+@time_execution
 def clean_user_input(user_prompt):
     text= user_prompt.strip().replace('\n', ' ').replace('\r', '')
     text = ' '.join(text.split()) 
     return text
 
+@log_execution
+@time_execution
 def add_context(cleaned_prompt, additional_info):
     if additional_info:
         return f" {additional_info} {cleaned_prompt}"
