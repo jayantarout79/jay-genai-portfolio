@@ -1,6 +1,6 @@
-venv/
+.env
+Custom_Functions/index/
 __pycache__/
 *.pyc
-.env
-app.log
-*.DS_Store.env
+.DS_Store
+.venv/

@@ -1,0 +1,8 @@
+{
+  "fingerprint": "3985da718d787b839ea1af14ab50c2d6b1463bc3c24d7df781da713c9ec23128",
+  "embedding_model": "text-embedding-3-small",
+  "embedded_columns": [
+    "City",
+    "ProductName"
+  ]
+}

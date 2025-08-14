@@ -1,0 +1,9 @@
+2025-08-14 01:16:59,949 - Custom_Functions.faiss_query_engine - INFO - Building FAISS index (this is done once; subsequent runs will load it).
+2025-08-14 01:19:01,041 - Custom_Functions.faiss_query_engine - INFO - FAISS index built with 9994 vectors (dim=1536).
+2025-08-14 01:19:01,058 - Custom_Functions.faiss_query_engine - INFO - FAISS index persisted to: index/faiss
+2025-08-14 01:19:01,316 - faiss_query_engine - INFO - Building FAISS index (this is done once; subsequent runs will load it).
+2025-08-14 01:21:06,257 - faiss_query_engine - INFO - FAISS index built with 9994 vectors (dim=1536).
+2025-08-14 01:21:06,285 - faiss_query_engine - INFO - FAISS index persisted to: index/faiss
+2025-08-14 01:27:32,882 - Custom_Functions.faiss_query_engine - INFO - Building FAISS index (this is done once; subsequent runs will load it).
+2025-08-14 01:29:31,578 - Custom_Functions.faiss_query_engine - INFO - FAISS index built with 9994 vectors (dim=1536).
+2025-08-14 01:29:31,605 - Custom_Functions.faiss_query_engine - INFO - FAISS index persisted to: index/faiss

@@ -1,12 +1,13 @@
-from query_engine import QueryEngine
-qe= QueryEngine("/Users/jkr/Desktop/FutureGoal/pythonprojects/jay-genai-portfolio/Simple-Python/sample_data.csv")
+#import pytest
+from Custom_Functions.faiss_query_engine import FaissQueryEngine
 
-print("\n--- Preview ---")
-print(qe.preview())
+faiss_qe = FaissQueryEngine("/Users/jkr/Desktop/FutureGoal/pythonprojects/jay-genai-portfolio/Simple-Python/SampleSuperstore.csv", embedded_columns=["City", "ProductName"])
 
-# Search for a keyword
-print("\n--- Search Results for 'Alice' ---")
-print(qe.search("Alice"))
-
-print("\n--- Search Results for '92' ---")
-print(qe.search("92"))
+if __name__ == "__main__":
+    print("Preview of the dataset:")
+    print(faiss_qe.preview().head(5))
+    
+    query = "furniture sold in New York"
+    result_df = faiss_qe.semantic_search(query, k=5)
+    print("\nSemantic search results:")
+    print(result_df[['City', 'ProductName', 'score']])

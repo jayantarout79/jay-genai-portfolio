@@ -7,11 +7,19 @@ This project demonstrates a clean GenAI prompt-processing pipeline using Python 
 ## 📁 Project Structure
 
 jay-genai-portfolio/
-├── prompt_utils.py        # Prompt cleaning and context utilities
-├── llm_query.py           # Query OpenAI using GPT-4 with processed prompt
-├── .env.example           # Sample .env file (DO NOT commit your real API key)
-├── requirements.txt       # Dependencies
-└── README.md              # Project overview
+├── Custom_Functions/                  # Modular, reusable Python components
+│   ├── faiss_query_engine.py           # Semantic search engine using FAISS + OpenAI embeddings
+│   ├── query_engine.py                 # Keyword-based CSV query engine
+│   ├── test_faiss_query_engine.py      # Test script for FAISSQueryEngine
+│
+├── SampleSuperstore.csv                # Example dataset for query engine testing
+├── llm_query.py                        # Script to query GPT-4 with processed prompts
+├── prompt_utils.py                     # Prompt cleaning and context utilities
+├── query_engine.py                     # (Optional duplicate / refactored version in root)
+├── requirements.txt                    # Dependencies for the project
+├── README.md                           # Project documentation
+├── .env.example                        # Example env file (no real keys)
+└── .env                                # Local environment variables (ignored in Git)
 
 ---
 
