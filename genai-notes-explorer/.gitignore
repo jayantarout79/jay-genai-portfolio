@@ -1,0 +1,1 @@
+.env, index/, caches, checkpoints, logs/, outputs/, *.pyc, __pycache__/, *.pkl, *.h5, *.ckpt, *.log, *.csv, *.tsv, *.json, *.zip, *.tar.gz, .vscode/, .idea/, *.iml, .DS_Store, Thumbs.db

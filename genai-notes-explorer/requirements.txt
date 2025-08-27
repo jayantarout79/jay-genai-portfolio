@@ -1,0 +1,36 @@
+# Core Python version
+python-dotenv>=1.0.0     # for .env file support
+
+# OpenAI client
+openai>=1.40.0           # for embeddings + chat completions
+
+# LangChain ecosystem
+langchain>=0.2.0         # core RAG utilities
+langchain-community>=0.2.0
+langchain-core>=0.2.0
+
+# FAISS for vector storage
+faiss-cpu>=1.7.4         # similarity search (CPU version)
+# if using GPU → replace with faiss-gpu
+
+# Document parsing
+pypdf>=4.0.0             # PDF loader
+python-docx>=1.0.0       # (optional) Word docs
+unstructured>=0.15.0     # robust text extraction
+
+# Data utilities
+pandas>=2.0.0            # tabular / CSV handling
+numpy>=1.24.0            # embeddings, matrix ops
+
+# CLI & Dev helpers
+tqdm>=4.66.0             # progress bars
+rich>=13.0.0             # pretty terminal outputs
+argparse                 # stdlib but noted for clarity
+
+# Optional (but recommended for notebooks)
+jupyter>=1.0.0
+ipykernel>=6.0.0
+
+# Testing & linting (optional)
+pytest>=7.0.0
+black>=24.0.0
