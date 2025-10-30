@@ -1,5 +1,5 @@
 {
   "embedding_model": "text-embedding-3-small",
   "dim": 1536,
-  "count": 22
+  "count": 5
 }
