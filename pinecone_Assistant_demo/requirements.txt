@@ -1,0 +1,3 @@
+pinecone
+pinecone-client
+python-dotenv
