@@ -1,0 +1,11 @@
+# from your project root
+python -m venv .venv
+source .venv/bin/activate      # Windows: .venv\Scripts\activate
+pip install --upgrade pip
+pip install streamlit python-dotenv
+
+# create folders and put files in place
+mkdir -p src/config
+# (drop your two files)
+#   app.py
+#   src/config/secret_manager.py

@@ -103,14 +103,26 @@ if "chat_open" not in st.session_state:
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = {}
 
+# --- Session-only Pinecone key (no persistence)
+if "pinecone_api_key" not in st.session_state:
+    st.session_state.pinecone_api_key = None
+
+def active_key():
+    """Return the active Pinecone key for this session only.
+    Falls back to Streamlit secrets or .env for local/dev convenience,
+    but the Settings UI will not persist anything to disk.
+    """
+    if st.session_state.pinecone_api_key:
+        return st.session_state.pinecone_api_key
+    try:
+        if hasattr(st, "secrets") and "PINECONE_API_KEY" in st.secrets:
+            return st.secrets["PINECONE_API_KEY"]
+    except Exception:
+        pass
+    return get_env_value("PINECONE_API_KEY", env_path=ENV_PATH)
+
 # Current value (masked)
-#current_key = get_env_value("PINECONE_API_KEY", env_path=ENV_PATH)
-# Prefer Streamlit secrets on cloud, fallback to local .env
-current_key = (
-    st.secrets.get("PINECONE_API_KEY")
-    if hasattr(st, "secrets") and "PINECONE_API_KEY" in st.secrets
-    else get_env_value("PINECONE_API_KEY", env_path=ENV_PATH)
-)
+current_key = active_key()
 
 # Sidebar + Main toggle
 sidebar_clicked = False
@@ -258,13 +270,14 @@ if not current_key and not st.session_state.show_settings:
 # Main area (visible only when settings are open)
 if st.session_state.show_settings:
     st.title("🔧 Settings")
-    st.caption("Add or update your Pinecone API key. Values are written to `.env` in the project root.")
+    st.caption("Add your Pinecone API key for **this session only**. It is not saved to disk or secrets.")
     with st.container(border=True):
         st.subheader("Pinecone Configuration")
 
         # Small status line
-        status = "✅ Found" if current_key else "❌ Not set"
+        status = "✅ Set (session)" if st.session_state.pinecone_api_key else ("✅ Found (fallback)" if current_key else "❌ Not set")
         st.write(f"**PINECONE_API_KEY:** {status}")
+        st.caption("Session mode: paste your key below and click ‘Use for this session’. It will be cleared when the session ends.")
 
         st.divider()
 
@@ -272,41 +285,43 @@ if st.session_state.show_settings:
         with st.expander("Edit Settings", expanded=True):
             with st.form("pinecone_settings_form", clear_on_submit=False):
                 api_key_input = st.text_input(
-                    "Pinecone API Key",
-                    value=current_key if current_key else "",
+                    "Pinecone API Key (session-only)",
+                    value=st.session_state.pinecone_api_key or "",
                     type="password",
-                    help="Format usually starts with `pc-...`",
+                    help="Used only for this session. Not persisted.",
                 )
 
                 col1, col2, col3 = st.columns([1, 1, 1])
                 with col1:
-                    submitted = st.form_submit_button("Save", type="primary")
+                    use_session = st.form_submit_button("Use for this session", type="primary")
                 with col2:
-                    cancel = st.form_submit_button("Cancel")
+                    clear_key = st.form_submit_button("Clear key")
                 with col3:
                     close = st.form_submit_button("Close Settings")
 
-            if submitted:
-                # Basic validation
+            if use_session:
                 if not api_key_input or not api_key_input.strip():
                     st.error("Pinecone API key cannot be empty.")
                 else:
                     if not api_key_input.startswith("pc-"):
                         st.warning("The key doesn’t start with `pc-`. Double-check you pasted the correct Pinecone API key.")
-                    set_env_value("PINECONE_API_KEY", api_key_input.strip(), env_path=ENV_PATH)
-                    st.success("Settings saved to `.env`.")
+                    st.session_state.pinecone_api_key = api_key_input.strip()
+                    st.success("Session key set. You can now use assistants.")
                     st.session_state.show_settings = False
                     st.rerun()
 
-            if cancel:
-                st.session_state.show_settings = False
-                st.info("Changes discarded.")
+            if clear_key:
+                st.session_state.pinecone_api_key = None
+                st.info("Session key cleared.")
                 st.rerun()
 
             if 'close' in locals() and close:
                 st.session_state.show_settings = False
                 st.info("Settings closed.")
                 st.rerun()
+
+# Re-resolve key after settings changes
+current_key = active_key()
 
 # -------- Assistant Files panel (visible when an assistant is selected and settings are closed) --------
 if (
@@ -513,6 +528,3 @@ if (
                                 st.caption("Citations available but could not be parsed.")
 
                 st.rerun()
-
-if st.session_state.show_settings:
-    st.caption("Tip: Keep `.env` out of version control. Paste your Pinecone API key and hit Save. That's it.")

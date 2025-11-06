@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from pinecone import Pinecone
+from pinecone  import Pinecone
 
 # Load env vars from .env file (PINECONE_API_KEY, etc.)
 load_dotenv()

@@ -67,3 +67,13 @@ Once uploaded, you can query your assistant:
 	•	“Which product line saw the largest increase in sales?”
 	•	“Summarize the report in 3 bullet points.”
 
+🔗 References
+	•	📘 Pinecone Assistant Documentation
+	•	🧩 Pinecone Python SDK
+	•	🌐 Pinecone Website
+
+
+🧠 Author
+
+Jayanta Kumar Rout (Jay)
+LinkedIn • GitHub
