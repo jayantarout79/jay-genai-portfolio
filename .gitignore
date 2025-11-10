@@ -4,3 +4,15 @@ __pycache__/
 *.pyc
 .DS_Store
 .venv/
+# Conversational BI Agent local files
+Conversational-BI-Agent/.venv311/
+Conversational-BI-Agent/venv/
+Conversational-BI-Agent/__pycache__/
+Conversational-BI-Agent/.env
+
+# Generic Python ignores
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.env
