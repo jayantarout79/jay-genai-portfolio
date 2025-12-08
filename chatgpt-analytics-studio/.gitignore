@@ -1,0 +1,20 @@
+# Virtual envs and Python cache
+.venv/
+__pycache__/
+*.pyc
+.mypy_cache/
+.DS_Store
+
+# Env / secrets
+.env
+
+# Local data artifacts
+chatgpt_raw_data/
+data/chunks/
+data/audio_transcripts/
+data/ai_aggregates.json
+data/processing_state.json
+data/word_counts.json
+
+# Streamlit cache
+.streamlit/
