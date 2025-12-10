@@ -1,0 +1,22 @@
+# Python / virtual env
+__pycache__/
+*.py[cod]
+.Python
+.venv/
+env/
+venv/
+
+# Environment keys
+.env
+
+# VS Code / IDE
+.vscode/
+.idea/
+
+# Streamlit + data artifacts
+data/batch_input.jsonl
+data/batch_output.jsonl
+.streamlit/
+
+# macOS
+.DS_Store
