@@ -1,0 +1,14 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+
+# Environments
+.venv/
+venv/
+.env
+
+# Streamlit artifacts
+.streamlit/
+
+# OS files
+.DS_Store
