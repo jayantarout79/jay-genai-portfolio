@@ -1,0 +1,24 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.ruff_cache/
+
+# Environments
+.env
+.venv/
+venv/
+
+# Editors / OS
+.DS_Store
+.idea/
+.vscode/
+
+# Logs / runtime artifacts
+logs/
+.streamlit/
+
+# Local tooling
+.coverage
+.mypy_cache/
